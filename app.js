@@ -2,8 +2,19 @@ const readlineSync = require('readline-sync')
 let board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 let gameFinished = false
+let moveCount = 1
 
 const insertMove = function insertMove(move, char) {
+  if (board[move - 1] === 'X' || board[move - 1] === 'O'){
+    console.log(`\nDon't be stupid, someone already played that square`)
+    moveCount--
+    askForMove()
+  }
+  if (move < 0 || move > 9) {
+    console.log(`\nThat square doesn't exist, knock it off`)
+    moveCount--
+    askForMove()
+  }
   board[move - 1] = char
   printBoard()
 }
@@ -16,7 +27,6 @@ console.log(`\n ${board[0]} | ${board[1]} | ${board[2]}
  ${board[6]} | ${board[7]} | ${board[8]}`)
 }
 
-let moveCount = 1
 const askForMove = function askForMove() {
   let name, char, move
   if (moveCount % 2 === 0) {
